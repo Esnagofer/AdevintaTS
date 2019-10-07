@@ -16,4 +16,8 @@ public class IndexDirectory extends Command {
         return new IndexDirectory(directoryPath);
     }
 
+    public String directoryPath() {
+        return directoryPath;
+    }
+
 }

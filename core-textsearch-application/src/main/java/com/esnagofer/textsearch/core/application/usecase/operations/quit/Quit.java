@@ -1,4 +1,4 @@
-package com.esnagofer.textsearch.core.application.usecase.quit;
+package com.esnagofer.textsearch.core.application.usecase.operations.quit;
 
 import com.esnagofer.textsearch.lib.application.usecase.Command;
 

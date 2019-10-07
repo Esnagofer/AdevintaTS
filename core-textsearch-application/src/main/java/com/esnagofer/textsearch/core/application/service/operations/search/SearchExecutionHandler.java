@@ -1,7 +1,7 @@
-package com.esnagofer.textsearch.core.application.service.search;
+package com.esnagofer.textsearch.core.application.service.operations.search;
 
-import com.esnagofer.textsearch.core.application.usecase.search.Search;
-import com.esnagofer.textsearch.core.application.usecase.search.SearchResult;
+import com.esnagofer.textsearch.core.application.usecase.operations.search.Search;
+import com.esnagofer.textsearch.core.application.usecase.operations.search.SearchResult;
 import com.esnagofer.textsearch.lib.application.service.DefaultQueryExecutionHandler;
 import com.esnagofer.textsearch.lib.application.service.QueryExecutionHandler;
 

@@ -1,6 +1,6 @@
-package com.esnagofer.textsearch.core.application.service.quit;
+package com.esnagofer.textsearch.core.application.service.operations.quit;
 
-import com.esnagofer.textsearch.core.application.usecase.quit.Quit;
+import com.esnagofer.textsearch.core.application.usecase.operations.quit.Quit;
 import com.esnagofer.textsearch.lib.application.service.CommandExecutionHandler;
 import com.esnagofer.textsearch.lib.application.service.DefaultCommandExecutionHandler;
 

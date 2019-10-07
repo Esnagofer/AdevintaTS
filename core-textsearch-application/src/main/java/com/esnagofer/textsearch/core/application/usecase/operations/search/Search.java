@@ -1,4 +1,4 @@
-package com.esnagofer.textsearch.core.application.usecase.search;
+package com.esnagofer.textsearch.core.application.usecase.operations.search;
 
 import com.esnagofer.textsearch.lib.Validate;
 import com.esnagofer.textsearch.lib.application.usecase.Query;
