@@ -1,14 +1,19 @@
 package com.esnagofer.textsearch.core.domain.service;
 
-import com.esnagofer.textsearch.core.domain.model.RankedFile;
-import com.esnagofer.textsearch.core.domain.model.TermId;
-import com.esnagofer.textsearch.core.domain.model.TermRepository;
-import com.esnagofer.textsearch.core.domain.model.TermRepositoryFactory;
+import com.esnagofer.textsearch.core.infrastructure.domain.model.*;
 import com.esnagofer.textsearch.lib.Validate;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class SearchTermService {
+
+    private boolean runCicle = true;
+
+    private static SearchTermService searchTermService;
+
+    private static final Integer mutex = 1;
 
     private TermRepository termRepository;
 
@@ -18,11 +23,20 @@ public class SearchTermService {
     }
 
     public static SearchTermService of() {
-        return new SearchTermService(TermRepositoryFactory.of());
+        if (searchTermService == null) {
+            synchronized (mutex) {
+                if (searchTermService == null) {
+                    searchTermService = new SearchTermService(TermRepositoryFactory.of());
+                }
+            }
+        }
+        return searchTermService;
     }
 
     public List<RankedFile> search(List<TermId> terms) {
-        return null;
+        List<RankedFile> rankedFiles = new ArrayList<>();
+        rankedFiles.add(RankedFile.of(FileId.ofPath("jander.txt"), Rank.of(100)));
+        return rankedFiles;
     }
 
 }

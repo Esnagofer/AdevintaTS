@@ -1,9 +1,9 @@
 package com.esnagofer.textsearch.core.domain.service;
 
-import com.esnagofer.textsearch.core.domain.model.FileId;
-import com.esnagofer.textsearch.core.domain.model.Term;
-import com.esnagofer.textsearch.core.domain.model.TermException;
-import com.esnagofer.textsearch.core.domain.model.TermId;
+import com.esnagofer.textsearch.core.infrastructure.domain.model.FileId;
+import com.esnagofer.textsearch.core.infrastructure.domain.model.Term;
+import com.esnagofer.textsearch.core.infrastructure.domain.model.TermException;
+import com.esnagofer.textsearch.core.infrastructure.domain.model.TermId;
 
 import java.nio.file.Files;
 import java.util.ArrayList;

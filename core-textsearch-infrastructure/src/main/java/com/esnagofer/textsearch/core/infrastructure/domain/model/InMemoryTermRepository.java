@@ -1,4 +1,4 @@
-package com.esnagofer.textsearch.core.domain.model;
+package com.esnagofer.textsearch.core.infrastructure.domain.model;
 
 import com.esnagofer.textsearch.lib.domain.model.BaseRepository;
 

@@ -1,10 +1,10 @@
-package com.esnagofer.textsearch.core.domain.model;
+package com.esnagofer.textsearch.core.infrastructure.domain.model;
 
 import com.esnagofer.textsearch.lib.domain.model.RepositoryException;
 
 public class TermRepositoryFactory {
 
-    private  static final String REPOSITORY_CLASS_NAME = "com.esnagofer.textsearch.core.domain.model.InMemoryTermRepository";
+    private  static final String REPOSITORY_CLASS_NAME = "com.esnagofer.textsearch.core.infrastructure.domain.model.InMemoryTermRepository";
 
     private static TermRepository termRepository;
 

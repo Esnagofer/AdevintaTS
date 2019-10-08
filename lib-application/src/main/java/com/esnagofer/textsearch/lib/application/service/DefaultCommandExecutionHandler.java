@@ -19,7 +19,7 @@ public class DefaultCommandExecutionHandler<T extends Command> implements Comman
             internalExecute(command);
             endTransaction();
         } catch (Exception e) {
-
+            throw e;
         }
     }
 

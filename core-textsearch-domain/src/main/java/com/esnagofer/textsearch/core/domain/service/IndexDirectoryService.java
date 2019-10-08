@@ -1,10 +1,8 @@
 package com.esnagofer.textsearch.core.domain.service;
 
-import com.esnagofer.textsearch.core.domain.model.*;
+import com.esnagofer.textsearch.core.infrastructure.domain.model.*;
 import com.esnagofer.textsearch.lib.Validate;
-import com.esnagofer.textsearch.lib.domain.model.RepositoryException;
 
-import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -32,6 +30,14 @@ public class IndexDirectoryService {
         try (Stream<Path> walk = Files.walk(Paths.get(indexDirectoryId.value()))) {
             List<Path> result = walk.filter(Files::isRegularFile)
                 .collect(Collectors.toList());
+            //  TODO: Do not use this, It might be done with a logger
+            System.out.println(
+                String.format(
+                    "%s files read in directory %s",
+                    String.valueOf(result.size()),
+                    indexDirectoryId.value()
+                )
+            );
             return result;
         } catch (Exception e) {
             throw new IndexDirectoryException(e);
