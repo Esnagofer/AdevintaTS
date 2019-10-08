@@ -1,6 +1,7 @@
 package com.esnagofer.textsearch.lib.domain.model;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 public interface Repository<T extends Aggregate<S>, S extends Identity> {
@@ -9,7 +10,7 @@ public interface Repository<T extends Aggregate<S>, S extends Identity> {
 
 	void add(Set<T> aggregate);
 	
-	T get(S aggregateId);
+	Optional<T> get(S aggregateId);
 
 	List<T> get(S... aggregateIds);
 

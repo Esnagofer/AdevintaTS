@@ -3,6 +3,7 @@ package com.esnagofer.textsearch.core.application.usecase.operations.search;
 import com.esnagofer.textsearch.lib.Validate;
 import com.esnagofer.textsearch.lib.application.usecase.Query;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Search extends Query<SearchResult> {
@@ -17,6 +18,10 @@ public class Search extends Query<SearchResult> {
 
     public static Search of(List<String> wordsToSearch) {
         return new Search(wordsToSearch);
+    }
+
+    public List<String> wordsToSearch() {
+        return new ArrayList<>(wordsToSearch);
     }
 
 }

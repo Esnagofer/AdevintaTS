@@ -1,6 +1,7 @@
 package com.esnagofer.textsearch.lib.domain.model;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 public class BaseRepository<T extends Aggregate<S>, S extends Identity> implements Repository<T, S> {
@@ -16,7 +17,7 @@ public class BaseRepository<T extends Aggregate<S>, S extends Identity> implemen
     }
 
     @Override
-    public T get(S aggregateId) {
+    public Optional<T> get(S aggregateId) {
         throw new UnsupportedOperationException("Not implemented");
     }
 

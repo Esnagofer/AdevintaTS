@@ -1,9 +1,6 @@
 package com.esnagofer.textsearch.core.domain.service;
 
-import com.esnagofer.textsearch.core.domain.model.FileId;
-import com.esnagofer.textsearch.core.domain.model.IndexDirectoryException;
-import com.esnagofer.textsearch.core.domain.model.IndexDirectoryId;
-import com.esnagofer.textsearch.core.domain.model.TermRepository;
+import com.esnagofer.textsearch.core.domain.model.*;
 import com.esnagofer.textsearch.lib.Validate;
 import com.esnagofer.textsearch.lib.domain.model.RepositoryException;
 
@@ -52,17 +49,8 @@ public class IndexDirectoryService {
 
     public static IndexDirectoryService of() {
         ExtractTermsService extractTermsService = ExtractTermsService.of();
-        Object termRepositoryInstance = null;
-        try {
-            termRepositoryInstance = Class.forName("com.esnagofer.textsearch.core.domain.model.InMemoryTermRepository")
-                .getDeclaredConstructor()
-                .newInstance();
-        } catch (Exception e) {
-            throw new RepositoryException(e);
-        }
-        TermRepository termRepository = TermRepository.class.cast(termRepositoryInstance);
+        TermRepository termRepository = TermRepositoryFactory.of();
         return new IndexDirectoryService(extractTermsService, termRepository);
     }
-
 
 }

@@ -2,9 +2,8 @@ package com.esnagofer.textsearch.core.domain.model;
 
 import com.esnagofer.textsearch.lib.domain.model.BaseRepository;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class InMemoryTermRepository extends BaseRepository<Term, TermId> implements TermRepository  {
 
@@ -25,14 +24,17 @@ public class InMemoryTermRepository extends BaseRepository<Term, TermId> impleme
     }
 
     @Override
-    public Term get(TermId termId) {
-        throw new UnsupportedOperationException("Not implemented");
+    public Optional<Term> get(TermId termId) {
+        return Optional.ofNullable(termsInRepository.get(termId));
     }
-
 
     @Override
     public List<Term> get(TermId... termIds) {
-        throw new UnsupportedOperationException("Not implemented");
+        return Arrays.stream(termIds)
+            .map(this::get)
+            .filter(term -> term.isPresent())
+            .map(term -> term.get())
+            .collect(Collectors.toList());
     }
 
 }
