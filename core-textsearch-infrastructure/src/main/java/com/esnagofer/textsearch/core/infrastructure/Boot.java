@@ -1,10 +1,29 @@
 package com.esnagofer.textsearch.core.infrastructure;
 
-import com.esnagofer.textsearch.core.infrastructure.system.Runtime;
+import com.esnagofer.textsearch.core.application.service.index.IndexDirectoryExecutionHandler;
+import com.esnagofer.textsearch.core.application.service.operations.start.StartExecutionHandler;
+import com.esnagofer.textsearch.core.application.usecase.index.IndexDirectory;
+import com.esnagofer.textsearch.core.application.usecase.operations.start.Start;
 
 public class Boot {
 
-    public static void main(String[] args) {
-        Runtime.init(args[0]);
+    private static void index(String directoryPath) {
+        IndexDirectory indexDirectory = IndexDirectory.of(directoryPath);
+        IndexDirectoryExecutionHandler.of().execute(indexDirectory);
     }
+
+    private static void start() {
+        Start start = Start.of();
+        StartExecutionHandler.of().execute(start);
+    }
+
+    public static void init(String directoryPath) {
+        index(directoryPath);
+        start();
+    }
+
+    public static void main(String[] args) {
+        Boot.init(args[0]);
+    }
+
 }

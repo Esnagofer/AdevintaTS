@@ -25,7 +25,10 @@ public class SearchExecutionHandler
     }
 
     private Rank fromRankedFile(RankedFile rankedFile) {
-        return Rank.of(rankedFile.fileId().value(), rankedFile.rank().value());
+        return Rank.of(
+            rankedFile.fileId().path().getFileName().toString(),
+            rankedFile.rank().value()
+        );
     }
 
     @Override

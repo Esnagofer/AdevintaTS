@@ -3,9 +3,7 @@ package com.esnagofer.textsearch.core.domain.service;
 import com.esnagofer.textsearch.core.infrastructure.domain.model.*;
 import com.esnagofer.textsearch.lib.Validate;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class SearchTermService {
 
@@ -33,9 +31,26 @@ public class SearchTermService {
         return searchTermService;
     }
 
-    public List<RankedFile> search(List<TermId> terms) {
+    public List<RankedFile> search(List<TermId> termIds) {
+        Map<FileId,Integer> fileHitCount = new HashMap<>();
+        List<Term> terms = termRepository.get(termIds.toArray(new TermId[termIds.size()]));
+        terms.stream().forEach(term -> {
+            term.filesContainingTerm().stream()
+                .forEach(fileId -> {
+                    Integer thisFileHitCount = fileHitCount.get(fileId);
+                    if (thisFileHitCount == null) {
+                        thisFileHitCount = 0;
+                    }
+                    thisFileHitCount++;
+                    fileHitCount.put(fileId,thisFileHitCount);
+            }   );
+        });
         List<RankedFile> rankedFiles = new ArrayList<>();
-        rankedFiles.add(RankedFile.of(FileId.ofPath("jander.txt"), Rank.of(100)));
+        fileHitCount.keySet().stream().forEach(fileId -> {
+            Integer thisFileHitCount = fileHitCount.get(fileId);
+            Integer fileRank = (100 * thisFileHitCount / termIds.size());
+            rankedFiles.add(RankedFile.of(fileId, Rank.of(fileRank)));
+        });
         return rankedFiles;
     }
 

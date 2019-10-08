@@ -22,6 +22,8 @@ public class CommandLineTermReaderService implements TermReaderService {
                 System.out.print("search> ");
                 final String line = keyboard.nextLine();
                 switch (line) {
+                    case "":
+                        break;
                     case ":quit":
                         QuitExecutionHandler.of().execute(Quit.of());
                         break;
