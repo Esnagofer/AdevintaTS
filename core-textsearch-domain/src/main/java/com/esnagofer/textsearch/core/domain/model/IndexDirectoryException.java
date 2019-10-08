@@ -1,4 +1,4 @@
-package com.esnagofer.textsearch.core.domain.service;
+package com.esnagofer.textsearch.core.domain.model;
 
 public class IndexDirectoryException extends RuntimeException {
 
