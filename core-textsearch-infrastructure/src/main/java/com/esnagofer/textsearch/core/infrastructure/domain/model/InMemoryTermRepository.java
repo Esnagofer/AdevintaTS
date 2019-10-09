@@ -1,17 +1,25 @@
 package com.esnagofer.textsearch.core.infrastructure.domain.model;
 
+import com.esnagofer.textsearch.core.domain.model.Term;
+import com.esnagofer.textsearch.core.domain.model.TermId;
+import com.esnagofer.textsearch.core.domain.model.TermRepository;
 import com.esnagofer.textsearch.lib.domain.model.BaseRepository;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class InMemoryTermRepository extends BaseRepository<Term, TermId> implements TermRepository  {
+public class InMemoryTermRepository extends BaseRepository<Term, TermId> implements TermRepository {
 
     private Map<TermId, Term> termsInRepository = new HashMap<>();
 
     public InMemoryTermRepository(){}
 
-    //  TODO:
+    @Override
+    public void add(Term term) {
+        termsInRepository.put(term.id(), term);
+    }
+
+    //  TODO: Improve synchronization granularity
     @Override
     public synchronized void merge(Term newTermToMerge) {
         Term existentTerm = termsInRepository.get(newTermToMerge.id());
@@ -20,7 +28,7 @@ public class InMemoryTermRepository extends BaseRepository<Term, TermId> impleme
         } else {
             existentTerm = newTermToMerge;
         }
-        termsInRepository.put(newTermToMerge.id(), existentTerm);
+        add(existentTerm);
     }
 
     @Override
@@ -35,6 +43,11 @@ public class InMemoryTermRepository extends BaseRepository<Term, TermId> impleme
             .filter(term -> term.isPresent())
             .map(term -> term.get())
             .collect(Collectors.toList());
+    }
+
+    @Override
+    public boolean contains(TermId termId) {
+        return termsInRepository.containsKey(termId);
     }
 
 }

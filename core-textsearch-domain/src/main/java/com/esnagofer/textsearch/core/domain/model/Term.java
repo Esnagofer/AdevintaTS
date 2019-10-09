@@ -1,9 +1,12 @@
-package com.esnagofer.textsearch.core.infrastructure.domain.model;
+package com.esnagofer.textsearch.core.domain.model;
 
 import com.esnagofer.textsearch.lib.domain.model.Aggregate;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Term extends Aggregate<TermId> {
 
@@ -32,6 +35,25 @@ public class Term extends Aggregate<TermId> {
 
     public static Term of(TermId termId) {
         return new Term(termId);
+    }
+
+    //  TODO:   We can discuss about if this location for calculate Terms is the best
+    //          It could be also implemented as a Service/VO: pros, cons , coupling ...
+    public static List<Term> of(Stream<String> lines, FileId fileId){
+        List<Term>out  = new ArrayList<>();
+        out = lines
+            // TODO: Improve parsing in order to detect signs as delimiter tokens
+            .map(line0 -> line0.split("[\\s]+"))
+            .flatMap(Arrays::stream)
+            .distinct()
+            .map(TermId::of)
+            .map(Term::of)
+            .map(term -> {
+                term.isInFile(fileId);
+                return term;
+            })
+            .collect(Collectors.toList());
+        return out;
     }
 
 }

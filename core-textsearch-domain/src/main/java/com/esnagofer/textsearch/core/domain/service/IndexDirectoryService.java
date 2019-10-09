@@ -1,6 +1,6 @@
 package com.esnagofer.textsearch.core.domain.service;
 
-import com.esnagofer.textsearch.core.infrastructure.domain.model.*;
+import com.esnagofer.textsearch.core.domain.model.*;
 import com.esnagofer.textsearch.lib.Validate;
 
 import java.nio.file.Files;

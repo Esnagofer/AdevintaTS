@@ -1,13 +1,13 @@
 package com.esnagofer.textsearch.core.domain.service;
 
-import com.esnagofer.textsearch.core.infrastructure.domain.model.*;
+import com.esnagofer.textsearch.core.domain.model.*;
 import com.esnagofer.textsearch.lib.Validate;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class SearchTermService {
-
-    private boolean runCicle = true;
 
     private static SearchTermService searchTermService;
 
@@ -34,24 +34,7 @@ public class SearchTermService {
     public List<RankedFile> search(List<TermId> termIds) {
         Map<FileId,Integer> fileHitCount = new HashMap<>();
         List<Term> terms = termRepository.get(termIds.toArray(new TermId[termIds.size()]));
-        terms.stream().forEach(term -> {
-            term.filesContainingTerm().stream()
-                .forEach(fileId -> {
-                    Integer thisFileHitCount = fileHitCount.get(fileId);
-                    if (thisFileHitCount == null) {
-                        thisFileHitCount = 0;
-                    }
-                    thisFileHitCount++;
-                    fileHitCount.put(fileId,thisFileHitCount);
-            }   );
-        });
-        List<RankedFile> rankedFiles = new ArrayList<>();
-        fileHitCount.keySet().stream().forEach(fileId -> {
-            Integer thisFileHitCount = fileHitCount.get(fileId);
-            Integer fileRank = (100 * thisFileHitCount / termIds.size());
-            rankedFiles.add(RankedFile.of(fileId, Rank.of(fileRank)));
-        });
-        return rankedFiles;
+        return RankedFile.of(termIds, fileHitCount, terms);
     }
 
 }

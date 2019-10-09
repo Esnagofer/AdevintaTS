@@ -18,8 +18,9 @@ Sorry but there's not testing (I had no time to implement it. The total amount o
 I know that without testing it could not be deployed to a production environment.
 I've not used TDD and I have prioritized the basic function & domain model. 
 ##How to compile
+Requisites are Java 8+ & maven 3.6+
 In the root project folder   
 **mvn clean package**  
 ##How to execute
 In the root project folder   
-**java -jar core-textsearch-infrastructure/target/core-textsearch-infrastructure-RELEASE.jar {path to index}**  
+**java -jar core-textsearch-infrastructure/target/core-textsearch-infrastructure-RELEASE.jar {path to index files}**  

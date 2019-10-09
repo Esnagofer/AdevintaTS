@@ -1,7 +1,7 @@
 package com.esnagofer.textsearch.core.application.service.index;
 
 import com.esnagofer.textsearch.core.application.usecase.index.IndexDirectory;
-import com.esnagofer.textsearch.core.infrastructure.domain.model.IndexDirectoryId;
+import com.esnagofer.textsearch.core.domain.model.IndexDirectoryId;
 import com.esnagofer.textsearch.core.domain.service.IndexDirectoryService;
 import com.esnagofer.textsearch.lib.Validate;
 import com.esnagofer.textsearch.lib.application.service.CommandExecutionHandler;
