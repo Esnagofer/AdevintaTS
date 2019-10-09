@@ -6,6 +6,8 @@ import com.esnagofer.textsearch.lib.application.usecase.Query;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class Search extends Query<SearchResult> {
@@ -26,6 +28,7 @@ public class Search extends Query<SearchResult> {
         List<String> wordsToSearchList = Arrays.stream(wordsToSearch.split(" "))
             .map(word -> word.replaceAll("\\s+",""))
             .map(word -> word.toLowerCase())
+            .filter(word -> !"".equals(word.trim()))
             .collect(Collectors.toList());
         return new Search(wordsToSearchList);
     }

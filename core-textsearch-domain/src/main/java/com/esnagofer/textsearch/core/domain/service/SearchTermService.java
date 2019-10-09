@@ -34,7 +34,7 @@ public class SearchTermService {
     public List<RankedFile> search(List<TermId> termIds) {
         Map<FileId,Integer> fileHitCount = new HashMap<>();
         List<Term> terms = termRepository.get(termIds.toArray(new TermId[termIds.size()]));
-        return RankedFile.of(terms);
+        return RankedFile.of(termIds.size(), terms);
     }
 
 }

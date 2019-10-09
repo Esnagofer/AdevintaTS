@@ -23,7 +23,11 @@ public class Boot {
     }
 
     public static void main(String[] args) {
-        Boot.init(args[0]);
+        try {
+            Boot.init(args[0]);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
 }

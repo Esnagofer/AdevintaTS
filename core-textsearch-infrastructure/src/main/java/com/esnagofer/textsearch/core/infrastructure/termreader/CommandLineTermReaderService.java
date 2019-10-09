@@ -43,6 +43,8 @@ public class CommandLineTermReaderService implements TermReaderService {
                         break;
                 }
             }
+        }  catch (Exception e) {
+            System.out.println(String.format("Ooopps: %s", e.getMessage()));
         }
 
     }

@@ -13,10 +13,11 @@ The same idea is applied for the LIB-xxx
 ##Domain model
 The indexation process implements "inverted index" modeled by Term aggregate which defines de relationship with the files
  in order to maximize the search efficiency.
-##Known issues
-Sorry but there's not testing (I had no time to implement it. The total amount of time I've dedicated is 5 hours).
-I know that without testing it could not be deployed to a production environment.
-I've not used TDD and I have prioritized the basic function & domain model. 
+##Known issues/TODO's/Improvements
+The files to index might be readed line by line in order to avoid OutOfMemoryException for large files.  
+The console message might be abstracted by a logger.  
+Improve synchronization granularity.  
+Index process might be executed concurrently (is thread safe).  
 ##How to compile
 Requisites are Java 8+ & maven 3.6+
 In the root project folder   

@@ -12,17 +12,12 @@ import java.util.stream.Stream;
 
 public class IndexDirectoryService {
 
-    private ExtractTermsService extractTermsService;
-
     private TermRepository termRepository;
 
     private IndexDirectoryService(
-        ExtractTermsService extractTermsService,
         TermRepository termRepository
     ) {
-        Validate.isNotNull(extractTermsService, "parseFileService");
         Validate.isNotNull(termRepository, "termRepository");
-        this.extractTermsService = extractTermsService;
         this.termRepository = termRepository;
     }
 
@@ -44,9 +39,17 @@ public class IndexDirectoryService {
         }
     }
 
+    public List<Term> extractTermList(FileId fileId) {
+        try (Stream<String> lines = Files.lines(fileId.path())) {
+            return Term.of(lines, fileId);
+        } catch (Exception e) {
+            throw new TermException(e);
+        }
+    }
+
     public void indexDirectory(IndexDirectoryId indexDirectoryId) {
         filesInDirectory(indexDirectoryId).stream()
-            .map(path -> extractTermsService.extractTermList(FileId.ofPath(path)))
+            .map(path -> this.extractTermList(FileId.ofPath(path)))
             //  TODO:   implement in only one stream pipeline
             .forEach(terms -> {
                 terms.stream().forEach(termRepository::merge);
@@ -54,9 +57,8 @@ public class IndexDirectoryService {
     }
 
     public static IndexDirectoryService of() {
-        ExtractTermsService extractTermsService = ExtractTermsService.of();
         TermRepository termRepository = TermRepositoryFactory.of();
-        return new IndexDirectoryService(extractTermsService, termRepository);
+        return new IndexDirectoryService(termRepository);
     }
 
 }

@@ -25,7 +25,7 @@ class RankedFileTest {
         terms.add(createTerm("w2", "f1.txt", "f3.txt", "f4.txt"));
         terms.add(createTerm("w3", "f1.txt", "f3.txt", "f4.txt"));
         terms.add(createTerm("w4", "f4.txt"));
-        List<RankedFile> rankedFiles = RankedFile.of(terms);
+        List<RankedFile> rankedFiles = RankedFile.of(4, terms);
         Map<FileId,Rank> mappedRank = new HashMap<>();
         rankedFiles.stream().forEach(rankedFile -> {
             mappedRank.put(rankedFile.fileId(), rankedFile.rank());

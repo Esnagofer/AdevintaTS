@@ -3,8 +3,9 @@ package com.esnagofer.textsearch.core.domain.model;
 import com.esnagofer.textsearch.lib.domain.model.Aggregate;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -40,19 +41,17 @@ public class Term extends Aggregate<TermId> {
     //  TODO:   We can discuss about if this location for calculate Terms is the best
     //          It could be also implemented as a Service/VO: pros, cons , coupling ...
     public static List<Term> of(Stream<String> lines, FileId fileId){
-        List<Term>out  = new ArrayList<>();
-        out = lines
-            // TODO: Improve parsing in order to detect signs as delimiter tokens
-            .map(line0 -> line0.split("[\\s]+"))
-            .flatMap(Arrays::stream)
-            .distinct()
-            .map(TermId::of)
-            .map(Term::of)
-            .map(term -> {
+        List<Term> out  = new ArrayList<>();
+        Pattern pattern = Pattern.compile("[a-zA-Z0-9]+");
+        for (String line: lines.collect(Collectors.toList())) {
+            Matcher wordMatcher = pattern.matcher(line);
+            while (wordMatcher.find()) {
+                TermId termId = TermId.of(wordMatcher.group().toLowerCase());
+                Term term = Term.of(termId);
                 term.isInFile(fileId);
-                return term;
-            })
-            .collect(Collectors.toList());
+                out.add(term);
+            }
+        }
         return out;
     }
 
