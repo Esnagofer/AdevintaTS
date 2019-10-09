@@ -1,6 +1,10 @@
 package com.esnagofer.textsearch.core.domain.model;
 
+import org.junit.jupiter.api.Test;
+
 import java.nio.file.Paths;
+import java.util.List;
+import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -27,7 +31,11 @@ class TermTest {
         assertTrue(term.filesContainingTerm().contains(fileId));
     }
 
-    @org.junit.jupiter.api.Test
+    private void assertContainsWord(List<Term> terms, String w1) {
+        assertTrue(terms.contains(Term.of(TermId.of(w1))));
+    }
+
+    @Test
     void isInFile() {
         Term term = createTerm("id1");
         assertNotNull(term);
@@ -37,7 +45,7 @@ class TermTest {
         assertIsInFile(term, "filePath2.txt");
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void merge() {
         Term term1 = createTerm("id1");
         assertNotNull(term1);
@@ -52,10 +60,26 @@ class TermTest {
         assertIsInFile(term1, "filePath2.txt");
     }
 
-    @org.junit.jupiter.api.Test
+    @Test
     void of() {
         Term term = createTerm("id1");
         assertNotNull(term);
         assertEquals("id1", term.id().value());
     }
+
+    @Test
+    void ofStream(){
+        List<Term> terms = Term.of(
+            Stream.of("w1 w2", "w2"),
+            FileId.ofPath(Paths.get("path.txt"))
+        );
+        assertContainsWord(terms, "w1");
+        assertContainsWord(terms, "w2");
+        assertEquals(2, terms.size());
+        assertEquals(1, terms.get(0).filesContainingTerm().size());
+        assertEquals(1, terms.get(1).filesContainingTerm().size());
+        assertEquals(Paths.get("path.txt"), terms.get(0).filesContainingTerm().get(0).path());
+        assertEquals(Paths.get("path.txt"), terms.get(1).filesContainingTerm().get(0).path());
+    }
+
 }

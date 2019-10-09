@@ -19,6 +19,7 @@ public class CommandLineTermReaderService implements TermReaderService {
     public void start() {
         try (Scanner keyboard = new Scanner(System.in)) {
             while (runCicle) {
+                try { Thread.sleep(350); } catch (InterruptedException e) { }
                 System.out.print("search> ");
                 final String line = keyboard.nextLine();
                 switch (line) {

@@ -3,6 +3,7 @@ package com.esnagofer.textsearch.core.domain.model;
 import com.esnagofer.textsearch.lib.Validate;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -25,7 +26,8 @@ public class RankedFile {
 
     //  TODO:   We can discuss about if this location for calculate rank is the best
     //          It could be also implemented as a Service/VO: pros, cons , coupling ...
-    public static List<RankedFile> of(List<TermId> termIds, Map<FileId, Integer> fileHitCount, List<Term> terms) {
+    public static List<RankedFile> of(List<Term> terms) {
+        Map<FileId,Integer> fileHitCount = new HashMap<>();
         terms.stream().forEach(term -> {
             term.filesContainingTerm().stream()
                 .forEach(fileId -> {
@@ -40,7 +42,7 @@ public class RankedFile {
         List<RankedFile> rankedFiles = new ArrayList<>();
         fileHitCount.keySet().stream().forEach(fileId -> {
             Integer thisFileHitCount = fileHitCount.get(fileId);
-            Integer fileRank = (100 * thisFileHitCount / termIds.size());
+            Integer fileRank = (100 * thisFileHitCount / terms.size());
             rankedFiles.add(RankedFile.of(fileId, Rank.of(fileRank)));
         });
         return rankedFiles;
